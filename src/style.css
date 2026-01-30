@@ -1,0 +1,309 @@
+@import url('https://fonts.bunny.net/css?family=space-grotesk:400,500,600,700|fraunces:600,700');
+@import 'tailwindcss';
+
+:root {
+  --ink: #1b1a17;
+  --muted: #5c5148;
+  --paper: #f6f1e8;
+  --panel: #fff7ea;
+  --accent: #e4572e;
+  --accent-strong: #c73f1e;
+  --accent-2: #1d7f7a;
+  --accent-3: #f1b934;
+  --border: rgba(27, 26, 23, 0.14);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--ink);
+  background-color: #1a1411;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Fraunces', serif;
+  letter-spacing: -0.01em;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(130deg, #231f1b, #3a2a24 45%, #e4572e 120%);
+}
+
+.app-shell[data-variant='home'] {
+  background: linear-gradient(135deg, #1b1512, #30201b 40%, #1d7f7a 120%);
+}
+
+.app-shell[data-variant='dashboard'] {
+  background: linear-gradient(140deg, #1a1411, #2a1c16 45%, #f1b934 120%);
+}
+
+.bg-scene {
+  position: absolute;
+  inset: -15%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 8%;
+  border-radius: 32px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 120px 120px;
+  opacity: 0.12;
+  animation: grid-drift 40s linear infinite;
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(40px);
+  opacity: 0.7;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.bg-sheen {
+  position: absolute;
+  inset: -25%;
+  background: conic-gradient(from 120deg, rgba(255, 255, 255, 0.05), transparent 30%, rgba(255, 255, 255, 0.18), transparent 70%);
+  opacity: 0.4;
+  animation: sheen-rotate 28s linear infinite;
+  mix-blend-mode: screen;
+}
+
+.bg-scene[data-variant='auth'] .orb-1 {
+  height: 440px;
+  width: 440px;
+  left: -4%;
+  top: 8%;
+  background: radial-gradient(circle, rgba(241, 185, 52, 0.85), rgba(241, 185, 52, 0));
+  animation: orb-auth-a 20s ease-in-out infinite;
+}
+
+.bg-scene[data-variant='auth'] .orb-2 {
+  height: 360px;
+  width: 360px;
+  right: 6%;
+  top: 12%;
+  background: radial-gradient(circle, rgba(228, 87, 46, 0.7), rgba(228, 87, 46, 0));
+  animation: orb-auth-b 24s ease-in-out infinite;
+}
+
+.bg-scene[data-variant='auth'] .orb-3 {
+  height: 520px;
+  width: 520px;
+  left: 12%;
+  bottom: -10%;
+  background: radial-gradient(circle, rgba(29, 127, 122, 0.55), rgba(29, 127, 122, 0));
+  animation: orb-auth-c 26s ease-in-out infinite;
+}
+
+.bg-scene[data-variant='home'] .orb-1 {
+  height: 460px;
+  width: 460px;
+  left: -6%;
+  top: 18%;
+  background: radial-gradient(circle, rgba(29, 127, 122, 0.7), rgba(29, 127, 122, 0));
+  animation: orb-home-a 22s ease-in-out infinite;
+}
+
+.bg-scene[data-variant='home'] .orb-2 {
+  height: 380px;
+  width: 380px;
+  right: 2%;
+  top: 6%;
+  background: radial-gradient(circle, rgba(228, 87, 46, 0.6), rgba(228, 87, 46, 0));
+  animation: orb-home-b 24s ease-in-out infinite;
+}
+
+.bg-scene[data-variant='home'] .orb-3 {
+  height: 520px;
+  width: 520px;
+  right: 14%;
+  bottom: -8%;
+  background: radial-gradient(circle, rgba(241, 185, 52, 0.55), rgba(241, 185, 52, 0));
+  animation: orb-home-c 28s ease-in-out infinite;
+}
+
+.bg-scene[data-variant='dashboard'] .orb-1 {
+  height: 520px;
+  width: 520px;
+  right: -6%;
+  top: 12%;
+  background: radial-gradient(circle, rgba(241, 185, 52, 0.75), rgba(241, 185, 52, 0));
+  animation: orb-dash-a 20s ease-in-out infinite;
+}
+
+.bg-scene[data-variant='dashboard'] .orb-2 {
+  height: 360px;
+  width: 360px;
+  left: 6%;
+  top: 4%;
+  background: radial-gradient(circle, rgba(228, 87, 46, 0.65), rgba(228, 87, 46, 0));
+  animation: orb-dash-b 22s ease-in-out infinite;
+}
+
+.bg-scene[data-variant='dashboard'] .orb-3 {
+  height: 500px;
+  width: 500px;
+  left: 18%;
+  bottom: -12%;
+  background: radial-gradient(circle, rgba(29, 127, 122, 0.55), rgba(29, 127, 122, 0));
+  animation: orb-dash-c 26s ease-in-out infinite;
+}
+
+@keyframes orb-auth-a {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(120px, -60px, 0) scale(1.1);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes orb-auth-b {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-90px, 70px, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes orb-auth-c {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-120px, 40px, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes orb-home-a {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(110px, -80px, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes orb-home-b {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-100px, 60px, 0) scale(1.1);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes orb-home-c {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(90px, -40px, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes orb-dash-a {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-140px, 40px, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes orb-dash-b {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(120px, 80px, 0) scale(1.1);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes orb-dash-c {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-80px, -60px, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes sheen-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes grid-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-60px, 40px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
