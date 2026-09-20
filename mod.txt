@@ -94,5 +94,74 @@ app.Run();
 
 
 
+html 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>tesst</title>
+</head>
+<body>
+	<h1>Get Contacts Form</h1>
+	<form id="form">
+		<input type="text" name="name" placeholder="name" id="name">
+		<input type="email" name="email" placeholder="email" id="email">
+		<input type="tel" name="phone" placeholder="phone" id="phone">
+		<input type="submit" name="subit" placeholder="submit" id="submit">
+	</form>
+	<h2>All Contacts</h2>
+	<ul id="list"></ul>
+</body>
+<script>
+	const form = document.getElementById('form');
+	const list =document.getElementById('list');
+	async function laodContacts(){
+		const response = await fetch("api/contacts");
+		const contacts = await response.json();
+		list.innerHTML = "";
+		contacts.forEach(contact => {
+			const item = document.createElement("li");
+			item.textContent = `${contact.name} - ${contact.email} - ${contact.phone}`;
+			list.appendChild(item);
+			});
+	}
+	form.addEventListener("submit", async function(event){
+		event.preventDefault();
+		const contact = {
+			name : document.getElementById("name"),
+			email : document.getElementById("email"),
+			phone : document.getElementById("phone")
+		};
+		const response = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.Stringify(contact)
+		};
+
+		if(response.ok){
+			form.reset();
+			await laodContacts();	
+		}
+		else{
+			const message = await response.text();
+			alert(message);
+		}
+	});
+	laodContacts();
+</script>
+</html>
+
+
+
+
+
+
+
+
+
 
 
