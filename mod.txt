@@ -1,0 +1,96 @@
+//controller
+
+using Microsoft.AspNetCore.Mvc;
+using ContApi.Models;
+
+namespace ContApi.Controllers{
+
+	[ApiController]
+	[Route("api/[Controller]")]
+	public class ContactsController : ControllerBase{
+
+		private static readonly List<Contact> Contacts = new List<Contact>();
+
+		[HttpGet]
+		public ActionResult<Contact> GetContacts(){
+			return Ok(Contacts);
+		}
+
+		[HttpGet("{id}")]
+		public ActionResult<Contact> GetContact(int id){
+			var contact = Contacts.FirstOrDefault(c=>c.Id==id);
+			if(contact == null){
+				return NotFound();
+			}
+			return Ok(contact);
+		}
+
+		[HttpPost]
+		public ActionResult<Contact> AddContact([FromBody] Contact contact){
+			if(string.IsNullOrWhiteSpace(contact.Name) ||
+				string.IsNullOrWhiteSpace(contact.Email))
+			{
+				return BadRequest("not validated");
+			}
+			contact.Id = Contacts.Count + 1;
+			Contacts.Add(contact);
+			return CreatedAtAction(
+				nameof(GetContacts),
+				new {id=contact.Id},
+				contact
+				); 
+		}
+	}
+}
+
+
+
+Model
+namespace ContApi.Models
+{
+    public class Contact{
+
+        public int Id {get;set;}
+
+        public string Name {get;set;} = String.Empty;
+
+        public string Email {get;set;} = String.Empty;
+
+        public string Phone {get;set;} = String.Empty;
+    
+    }
+}
+
+
+Program.cs
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+
+
+
+
+
+
