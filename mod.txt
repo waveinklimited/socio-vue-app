@@ -1,15 +1,16 @@
 //controller
-
 using Microsoft.AspNetCore.Mvc;
 using ContApi.Models;
 
-namespace ContApi.Controllers{
-
+namespace ContApi.Controllers
+{
 	[ApiController]
 	[Route("api/[Controller]")]
-	public class ContactsController : ControllerBase{
 
+	public class ContactsController : ControllerBase
+	{
 		private static readonly List<Contact> Contacts = new List<Contact>();
+		
 
 		[HttpGet]
 		public ActionResult<Contact> GetContacts(){
@@ -25,23 +26,24 @@ namespace ContApi.Controllers{
 			return Ok(contact);
 		}
 
+
 		[HttpPost]
 		public ActionResult<Contact> AddContact([FromBody] Contact contact){
-			if(string.IsNullOrWhiteSpace(contact.Name) ||
-				string.IsNullOrWhiteSpace(contact.Email))
+			if(string.IsNullOrWhiteSpace(contact.Name) || string.IsNullOrWhiteSpace(contact.Email))
 			{
-				return BadRequest("not validated");
+				return BadRequest("Validate it");
 			}
-			contact.Id = Contacts.Count + 1;
+			contact.Id = Contacts.Count+1;
 			Contacts.Add(contact);
 			return CreatedAtAction(
-				nameof(GetContacts),
-				new {id=contact.Id},
+				nameof(GetContact),
+				new {id = contact.Id},
 				contact
-				); 
+				);
 		}
 	}
 }
+
 
 
 
